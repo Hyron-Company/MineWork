@@ -1,0 +1,30 @@
+{
+  "name": "MineWork",
+  "version": "0.1.0",
+  "description": "Freelance for minecraft",
+  "repository": "test",
+  "author": "CyberCode",
+  "scripts": {
+    "client:dev": "cd client && yarn dev",
+    "client:start": "cd client && yarn start",
+    "client:build": "cd client && yarn build",
+    "client:lint": "cd client && yarn lint",
+    "client:install": "cd client && yarn",
+    "client:add": "cd client && yarn add",
+    "client:upgrade": "cd client && yarn upgrade",
+    "client:remove": "cd client && yarn remove",
+    "server:dev": "cd server && yarn dev",
+    "server:start": "cd server && yarn start",
+    "server:install": "cd server && yarn",
+    "add:server": "cd server && yarn add",
+    "upgrade:server": "cd server && yarn upgrade",
+    "remove:server": "cd server && yarn remove",
+    "dev": "concurrently \"yarn client:dev\" \"yarn server:dev\"  -n 'CLIENT,SERVER' -c 'green,red'",
+    "start": "concurrently \"yarn client:start\" \"yarn server:start\"  -n 'CLIENT,SERVER' -c 'green,red'",
+    "install": "concurrently \"yarn client:install\" \"yarn server:install\"  -n 'CLIENT,SERVER' -c 'green,red'"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.1",
+    "prettier": "^2.3.2"
+  }
+}
