@@ -14,6 +14,7 @@
     "client:upgrade": "cd client && yarn upgrade",
     "client:remove": "cd client && yarn remove",
     "server:dev": "cd server && yarn dev",
+    "server:gql": "cd server && yarn gql",
     "server:start": "cd server && yarn start",
     "server:install": "cd server && yarn",
     "server:add": "cd server && yarn add",
