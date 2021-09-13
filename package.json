@@ -22,7 +22,7 @@
     "server:remove": "cd server && yarn remove",
     "dev": "concurrently \"yarn client:dev\" \"yarn server:dev\"  -n 'CLIENT,SERVER' -c 'green,red'",
     "start": "concurrently \"yarn client:start\" \"yarn server:start\"  -n 'CLIENT,SERVER' -c 'green,red'",
-    "installAll": "concurrently \"yarn client:install\" \"yarn server:install\"  -n 'CLIENT,SERVER' -c 'green,red'"
+    "initialize": "concurrently \"yarn install\" \"yarn client:install\" \"yarn server:install\"  -n 'MAIN,CLIENT,SERVER' -c 'yellow,green,red' && yarn server:gql"
   },
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
