@@ -1,5 +1,23 @@
 # import Hello from './query/Hello.gql'
+# import User from './query/User.gql'
+
+type RegistrationOutput {
+  id: ID
+  email: String
+  password: String
+  refreshToken: String
+  accessToken: String
+}
 
 type Query {
   hello: [Hello]
+}
+
+type Query {
+  getAllUsers: [User]
+  getUser(id: ID!): User
+}
+
+type Mutation {
+  registration(email: String!, password: String!): RegistrationOutput
 }

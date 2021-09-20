@@ -3,6 +3,7 @@ import cors from 'cors'
 import express, { Application, Request, Response } from 'express'
 import mongoose, { ConnectOptions } from 'mongoose'
 import { apollo } from './src/graphql'
+import cookieParser from 'cookie-parser'
 
 dotenv.config()
 
@@ -15,6 +16,7 @@ const mongoConnectOptions = {
 } as ConnectOptions
 
 app.use(cors())
+app.use(cookieParser())
 
 const start = async () => {
   await mongoose.connect(MONGODB_URI as string, mongoConnectOptions)
