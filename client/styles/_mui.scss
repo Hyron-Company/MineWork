@@ -1,0 +1,19 @@
+.MuiButton-root {
+  padding: 0;
+  text-transform: none;
+  min-width: 0;
+  font-family: var(--primary-font);
+}
+
+.MuiPaper-root {
+  background-color: var(--background);
+  font-family: var(--primary-font);
+}
+
+.MuiInputBase-input {
+  color: var(--text-color);
+
+  &::placeholder {
+    color: var(--input-placeholder-color);
+  }
+}

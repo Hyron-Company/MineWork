@@ -1,0 +1,14 @@
+.nav-link {
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  min-width: max-content;
+  gap: 10px;
+  color: var(--text-color);
+  font-family: var(--secondary-font);
+
+  svg {
+    fill: var(--text-color);
+  }
+}

@@ -1,0 +1,32 @@
+.logo {
+  display: flex;
+  gap: 3px;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  width: max-content;
+  font-family: var(--logo-font);
+  line-height: 26px;
+  user-select: none;
+
+  &__icon {
+    padding: 2px;
+    background: var(--logo-background);
+    border-radius: var(--logo-radius);
+    fill: var(--logo-primary-text);
+  }
+
+  &__mine {
+    color: var(--logo-secondary-text);
+  }
+
+  .logo__work {
+    line-height: 26px;
+    padding: 0 7px;
+    font-size: 18px;
+    font-weight: bold;
+    background: var(--logo-background);
+    border-radius: var(--logo-radius);
+    color: var(--logo-primary-text);
+  }
+}
