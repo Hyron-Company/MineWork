@@ -1,0 +1,37 @@
+.header {
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  background: var(--header-background);
+  box-shadow: var(--shadow);
+  flex-basis: content;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 3vw;
+    min-width: max-content;
+  }
+
+  &__panel-zone {
+    justify-content: space-between;
+    gap: 20px;
+    width: 15vw;
+  }
+
+  &__left {
+    width: 100%;
+  }
+
+  .base-input input {
+    width: 20vw;
+  }
+
+  .subscribe-button {
+    height: 36px;
+    border-color: #ee842a;
+    color: #ee842a;
+    font-family: var(--secondary-font);
+  }
+}

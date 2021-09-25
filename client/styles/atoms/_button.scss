@@ -1,0 +1,31 @@
+.button {
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: var(--border-radius);
+  color: var(--primary-color);
+
+  &.MuiButton-root {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+
+  &.contained {
+    background: var(--primary-color);
+    color: var(--button-text-color);
+
+    &:hover {
+      background: var(--primary-color);
+    }
+  }
+
+  &.outlined {
+    font-weight: bold;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+
+    .MuiTouchRipple-root {
+      margin-top: -1px;
+      margin-right: -1px;
+    }
+  }
+}

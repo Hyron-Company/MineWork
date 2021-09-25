@@ -1,0 +1,14 @@
+.base-input {
+  display: flex;
+  font-size: 14px;
+  padding-left: 10px;
+  justify-content: center;
+  gap: 5px;
+  background: var(--input-background);
+  border-radius: var(--border-radius);
+
+  &__content {
+    display: flex;
+    gap: 5px;
+  }
+}
