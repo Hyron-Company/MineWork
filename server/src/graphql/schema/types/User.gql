@@ -1,0 +1,12 @@
+# import AuthenticationData from './AuthenticationData.gql'
+
+type User {
+  id: ID!
+  nick: String!
+  name: String!
+  surname: String!
+  email: String!
+  city: String
+  phoneNumber: String
+  authenticationData: AuthenticationData!
+}

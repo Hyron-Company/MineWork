@@ -1,7 +1,7 @@
-import { registration } from './../services/User';
+import UserController from '../../controllers/user-controller';
 const userResolver = {
   Mutation: {
-    registration
+    registration: UserController.registration
   }
 }
 

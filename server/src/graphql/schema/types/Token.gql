@@ -1,0 +1,7 @@
+type Token {
+  id: ID!
+  userID: ID!
+  ip: String!
+  accessToken: String!
+  refreshToken: String!
+}
