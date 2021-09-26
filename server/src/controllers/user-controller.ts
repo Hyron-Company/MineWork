@@ -5,10 +5,10 @@ import UserService from '../services/user-service'
 class UserController {
   registration = (
     parent: ResolversParentTypes,
-    { email, password }: MutationRegistrationArgs,
+    { input }: MutationRegistrationArgs,
     { res }: ExpressContext
   ) => {
-    return UserService.registration({ email, password })
+    return UserService.registration({ input })
   }
 
   activate = (parent: ResolversParentTypes, { activationCode }: MutationActivateArgs) => {

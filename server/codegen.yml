@@ -1,8 +1,15 @@
 overwrite: true
 schema: ./src/graphql/schema/types/**/*.gql
 generates:
+  ./src/graphql/schema/types.graphql:
+    plugins:
+      - schema-ast
+    config:
+      useIndexSignature: true
+      avoidOptionals: true
+
   ./src/graphql/resolvers.d.ts:
-    schema: ./src/graphql/schema/shema.gql
+    schema: ./src/graphql/schema/schema.gql
     plugins:
       - typescript
       - typescript-resolvers
@@ -11,7 +18,9 @@ generates:
       avoidOptionals: true
 
   ./src/graphql/models.d.ts:
-    schema: ./src/graphql/schema/types/**/*gql
+    schema: 
+    - '!*/schema.gql'
+    - './src/graphql/schema/types/**/*.gql'
     plugins:
       - typescript
       - typescript-mongodb

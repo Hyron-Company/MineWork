@@ -1,13 +1,9 @@
-
 type AuthenticationData @entity {
   id: ID! @id
-  user: User! @link
+  user: User @link
   login: String! @column
   password: String! @column
   isActive: Boolean @column
   activationCode: String @column
   tokens: [Token!] @link
 }
-
-# import Token from './Token.gql'
-# import User from './User.gql'

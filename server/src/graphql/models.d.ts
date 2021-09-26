@@ -21,7 +21,7 @@ export type Scalars = {
 
 export type IAuthenticationData = {
   id: Scalars['ID'];
-  user: IUser;
+  user: Maybe<IUser>;
   login: Scalars['String'];
   password: Scalars['String'];
   isActive: Maybe<Scalars['Boolean']>;
@@ -39,12 +39,9 @@ export type IToken = {
 
 export type IUser = {
   id: Scalars['ID'];
-  nick: Scalars['String'];
-  name: Scalars['String'];
-  surname: Scalars['String'];
+  nickname: Scalars['String'];
+  fullName: Scalars['String'];
   email: Scalars['String'];
-  city: Maybe<Scalars['String']>;
-  phoneNumber: Maybe<Scalars['String']>;
   authenticationData: IAuthenticationData;
 };
 
@@ -56,7 +53,7 @@ export type IAdditionalEntityFields = {
 import { ObjectId } from 'mongoose';
 export type IAuthenticationDataSchema = {
   _id: ObjectId,
-  user: IUserSchema['_id'],
+  user: Maybe<IUserSchema['_id']>,
   login: string,
   password: string,
   isActive: Maybe<boolean>,
@@ -74,11 +71,8 @@ export type ITokenSchema = {
 
 export type IUserSchema = {
   _id: ObjectId,
-  nick: string,
-  name: string,
-  surname: string,
+  nickname: string,
+  fullName: string,
   email: string,
-  city: Maybe<string>,
-  phoneNumber: Maybe<string>,
   authenticationData: IAuthenticationDataSchema['_id'],
 };

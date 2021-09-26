@@ -1,13 +1,8 @@
-
 type User @entity {
   id: ID! @id
-  nick: String! @column
-  name: String! @column
-  surname: String! @column
+  nickname: String! @column
+  fullName: String! @column
   email: String! @column
-  city: String @column
-  phoneNumber: String @column
   authenticationData: AuthenticationData! @link
 }
 
-# import AuthenticationData from './AuthenticationData.gql'

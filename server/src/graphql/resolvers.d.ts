@@ -3,6 +3,7 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -14,34 +15,65 @@ export type Scalars = {
 
 export type AuthenticationData = {
   __typename?: 'AuthenticationData';
+  activationCode: Maybe<Scalars['String']>;
   id: Scalars['ID'];
-  user: User;
+  isActive: Maybe<Scalars['Boolean']>;
   login: Scalars['String'];
   password: Scalars['String'];
-  isActive: Maybe<Scalars['Boolean']>;
-  activationCode: Maybe<Scalars['String']>;
   tokens: Maybe<Array<Token>>;
+  user: Maybe<User>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  activate: Maybe<Scalars['Boolean']>;
+  registration: Maybe<User>;
+};
+
+
+export type MutationActivateArgs = {
+  activationCode: Maybe<Scalars['String']>;
+};
+
+
+export type MutationRegistrationArgs = {
+  input: Maybe<RegisterUser>;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  getAllUsers: Maybe<Array<Maybe<User>>>;
+  getUser: Maybe<User>;
+};
+
+
+export type QueryGetUserArgs = {
+  id: Scalars['ID'];
+};
+
+export type RegisterUser = {
+  email: Scalars['String'];
+  fullName: Scalars['String'];
+  nickname: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type Token = {
   __typename?: 'Token';
-  id: Scalars['ID'];
-  user: User;
-  ip: Scalars['String'];
   accessToken: Scalars['String'];
+  id: Scalars['ID'];
+  ip: Scalars['String'];
   refreshToken: Scalars['String'];
+  user: User;
 };
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['ID'];
-  nick: Scalars['String'];
-  name: Scalars['String'];
-  surname: Scalars['String'];
-  email: Scalars['String'];
-  city: Maybe<Scalars['String']>;
-  phoneNumber: Maybe<Scalars['String']>;
   authenticationData: AuthenticationData;
+  email: Scalars['String'];
+  fullName: Scalars['String'];
+  id: Scalars['ID'];
+  nickname: Scalars['String'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -129,9 +161,12 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   AuthenticationData: ResolverTypeWrapper<AuthenticationData>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Mutation: ResolverTypeWrapper<{}>;
+  Query: ResolverTypeWrapper<{}>;
+  RegisterUser: RegisterUser;
   Token: ResolverTypeWrapper<Token>;
   User: ResolverTypeWrapper<User>;
 }>;
@@ -139,47 +174,59 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   AuthenticationData: AuthenticationData;
-  ID: Scalars['ID'];
   String: Scalars['String'];
+  ID: Scalars['ID'];
   Boolean: Scalars['Boolean'];
+  Mutation: {};
+  Query: {};
+  RegisterUser: RegisterUser;
   Token: Token;
   User: User;
 }>;
 
 export type AuthenticationDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthenticationData'] = ResolversParentTypes['AuthenticationData']> = ResolversObject<{
+  activationCode: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  user: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  isActive: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   login: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   password: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  isActive: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  activationCode: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   tokens: Resolver<Maybe<Array<ResolversTypes['Token']>>, ParentType, ContextType>;
+  user: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  activate: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationActivateArgs, never>>;
+  registration: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationRegistrationArgs, never>>;
+}>;
+
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  getAllUsers: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+  getUser: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
+}>;
+
 export type TokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = ResolversObject<{
-  id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  user: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  ip: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   accessToken: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  ip: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   refreshToken: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
-  id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  nick: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  name: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  surname: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  email: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  city: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  phoneNumber: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   authenticationData: Resolver<ResolversTypes['AuthenticationData'], ParentType, ContextType>;
+  email: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  fullName: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  nickname: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = any> = ResolversObject<{
   AuthenticationData: AuthenticationDataResolvers<ContextType>;
+  Mutation: MutationResolvers<ContextType>;
+  Query: QueryResolvers<ContextType>;
   Token: TokenResolvers<ContextType>;
   User: UserResolvers<ContextType>;
 }>;

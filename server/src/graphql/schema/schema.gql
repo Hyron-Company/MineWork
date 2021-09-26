@@ -1,22 +1,19 @@
-# import User from './types/User.gql'
-# import Token from './types/Token.gql'
-# import AuthenticationData from './types/AuthenticationData.gql'
+# import * from 'types.graphql'
 
-type RegistrationOutput {
-  id: ID!
-  email: String
-  password: String
-  refreshToken: String
-  accessToken: String
+input RegisterUser {
+  email: String!
+  password: String!
+  fullName: String!
+  nickname: String!
 }
 
 type Query {
   getAllUsers: [User]
   getUser(id: ID!): User
-  getToken(token: Token): AuthenticationData
 }
 
 type Mutation {
-  registration(email: String!, password: String!): RegistrationOutput
+  registration(input: RegisterUser): User
   activate(activationCode: String): Boolean
 }
+

@@ -1117,7 +1117,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@graphql-codegen/plugin-helpers@npm:^2.1.1":
+"@graphql-codegen/plugin-helpers@npm:^2.1.0, @graphql-codegen/plugin-helpers@npm:^2.1.1":
   version: 2.1.1
   resolution: "@graphql-codegen/plugin-helpers@npm:2.1.1"
   dependencies:
@@ -1130,6 +1130,19 @@ __metadata:
   peerDependencies:
     graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
   checksum: fb7921a901ac8326e80af5fd7f9c6b511c278b7df23a229f09a46d9650164cfcc31a81372f9fd601b1bbda1b884efae3f339368a1bb2f0070b7495dc88375a2a
+  languageName: node
+  linkType: hard
+
+"@graphql-codegen/schema-ast@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@graphql-codegen/schema-ast@npm:2.2.0"
+  dependencies:
+    "@graphql-codegen/plugin-helpers": ^2.1.0
+    "@graphql-tools/utils": ^8.1.1
+    tslib: ~2.3.0
+  peerDependencies:
+    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+  checksum: 5ddd05320398c5b4ac91cbbd055a11cdd7b4c10f116d2ca29e81a65afd82dd0303d8ae7d158910f643aa438e3a5025db698fe95e0b1fbcfa36aedcf1cfd70e98
   languageName: node
   linkType: hard
 
@@ -9419,6 +9432,7 @@ resolve@^2.0.0-next.3:
   resolution: "server@workspace:server"
   dependencies:
     "@graphql-codegen/cli": ^1.21.7
+    "@graphql-codegen/schema-ast": ^2.2.0
     "@graphql-codegen/typescript": ^1.23.0
     "@graphql-codegen/typescript-mongodb": ^2.1.4
     "@graphql-codegen/typescript-operations": ^1.18.4

@@ -1,7 +1,20 @@
-import mongoose from  'mongoose'
+import mongoose from 'mongoose'
+import { IAuthenticationDataSchema, IUserSchema } from '../graphql/models'
 
-export default class UserDto {
-    declare id : mongoose.Types.ObjectId;
-    declare email: string;
-    declare password: string;
+class UserDto {
+  payloadToken(user: Partial<IUserSchema & IAuthenticationDataSchema>) : UserPayloadTokenDto {
+    return {
+      email: user.email!,
+      nickname: user.nickname!,
+      password: user.password!
+    }
+  }
 }
+
+export interface UserPayloadTokenDto {
+  email: String
+  nickname: String
+  password: String
+}
+
+export default new UserDto()

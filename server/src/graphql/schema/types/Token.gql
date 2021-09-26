@@ -5,5 +5,3 @@ type Token @entity {
   accessToken: String! @column
   refreshToken: String! @column
 }
-
-# import User from './User'

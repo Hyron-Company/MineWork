@@ -7,27 +7,18 @@ export const UserSchema = new Schema<IUserSchema>({
     unique: true,
     required: true
   },
-  city: String,
-  name: {
+  fullName: {
     required: true,
     type: String
   },
-  surname: {
-    required: true,
-    type: String
-  },
-  phoneNumber: {
-    required: true,
-    type: String
-  },
-  nick: {
+  nickname: {
     required: true,
     unique: true,
     type: String
   },
   authenticationData: {
-    type: Schema.Types.ObjectId,
-    ref: 'authenticationData'
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'authentication-data'
   }
 })
 

@@ -1,0 +1,25 @@
+type AuthenticationData {
+  id: ID!
+  user: User
+  login: String!
+  password: String!
+  isActive: Boolean
+  activationCode: String
+  tokens: [Token!]
+}
+
+type Token {
+  id: ID!
+  user: User!
+  ip: String!
+  accessToken: String!
+  refreshToken: String!
+}
+
+type User {
+  id: ID!
+  nickname: String!
+  fullName: String!
+  email: String!
+  authenticationData: AuthenticationData!
+}

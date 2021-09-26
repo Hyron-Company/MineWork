@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken'
 import TokenModel from '../models/token-model'
 import mongoose from 'mongoose'
-import UserDto from '../dtos/user-dto'
+import { UserPayloadTokenDto } from '../dtos/user-dto'
 
 class TokenService {
-  generateTokens = (payload: UserDto) => {
+  generateTokens = (payload: UserPayloadTokenDto) => {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET || 'sercer-key', { expiresIn: '30m' })
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET || 'sercer-key', { expiresIn: '30d' })
 
@@ -14,7 +14,7 @@ class TokenService {
     }
   }
 
-  saveToken = async (userId: mongoose.Types.ObjectId, refreshToken: string) => {
+  saveToken = async (userId: mongoose.Schema.Types.ObjectId, refreshToken: string) => {
     const tokenData = await TokenModel.findOne({ user: userId })
     if (tokenData) {
       tokenData.refreshToken = refreshToken
