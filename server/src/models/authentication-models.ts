@@ -1,9 +1,9 @@
 import mongoose, { Schema, model } from 'mongoose'
-import { AuthenticationData } from '../graphql/resolvers'
+import { IAuthenticationDataSchema } from '../graphql/models'
 
-const AuthenticationSchema = new Schema({
-  userID: {
-      type: mongoose.Types.ObjectId,
+const AuthenticationSchema = new Schema<IAuthenticationDataSchema>({
+  user: {
+      type: Schema.Types.ObjectId,
       required: true,
       ref: 'user'
   },
@@ -24,11 +24,11 @@ const AuthenticationSchema = new Schema({
       required: true
   },
   tokens: {
-      type: mongoose.Types.ObjectId,
+      type: Array(Schema.Types.ObjectId),
       ref: 'token'
   }
 })
 
-const AuthenticationModel = model('authentication-data', AuthenticationSchema)
+const AuthenticationModel = model<IAuthenticationDataSchema>('authentication-data', AuthenticationSchema)
 
 export default AuthenticationModel

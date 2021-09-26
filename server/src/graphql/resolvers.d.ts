@@ -3,7 +3,6 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -16,7 +15,7 @@ export type Scalars = {
 export type AuthenticationData = {
   __typename?: 'AuthenticationData';
   id: Scalars['ID'];
-  userID: Scalars['ID'];
+  user: User;
   login: Scalars['String'];
   password: Scalars['String'];
   isActive: Maybe<Scalars['Boolean']>;
@@ -24,53 +23,10 @@ export type AuthenticationData = {
   tokens: Maybe<Array<Token>>;
 };
 
-export type Mutation = {
-  __typename?: 'Mutation';
-  activate: Maybe<Scalars['Boolean']>;
-  registration: Maybe<RegistrationOutput>;
-};
-
-
-export type MutationActivateArgs = {
-  activationCode: Maybe<Scalars['String']>;
-};
-
-
-export type MutationRegistrationArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
-};
-
-export type Query = {
-  __typename?: 'Query';
-  getAllUsers: Maybe<Array<Maybe<User>>>;
-  getToken: Maybe<AuthenticationData>;
-  getUser: Maybe<User>;
-};
-
-
-export type QueryGetTokenArgs = {
-  token: Maybe<Token>;
-};
-
-
-export type QueryGetUserArgs = {
-  id: Scalars['ID'];
-};
-
-export type RegistrationOutput = {
-  __typename?: 'RegistrationOutput';
-  accessToken: Maybe<Scalars['String']>;
-  email: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  password: Maybe<Scalars['String']>;
-  refreshToken: Maybe<Scalars['String']>;
-};
-
 export type Token = {
   __typename?: 'Token';
   id: Scalars['ID'];
-  userID: Scalars['ID'];
+  user: User;
   ip: Scalars['String'];
   accessToken: Scalars['String'];
   refreshToken: Scalars['String'];
@@ -176,9 +132,6 @@ export type ResolversTypes = ResolversObject<{
   ID: ResolverTypeWrapper<Scalars['ID']>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  Mutation: ResolverTypeWrapper<{}>;
-  Query: ResolverTypeWrapper<{}>;
-  RegistrationOutput: ResolverTypeWrapper<RegistrationOutput>;
   Token: ResolverTypeWrapper<Token>;
   User: ResolverTypeWrapper<User>;
 }>;
@@ -189,16 +142,13 @@ export type ResolversParentTypes = ResolversObject<{
   ID: Scalars['ID'];
   String: Scalars['String'];
   Boolean: Scalars['Boolean'];
-  Mutation: {};
-  Query: {};
-  RegistrationOutput: RegistrationOutput;
   Token: Token;
   User: User;
 }>;
 
 export type AuthenticationDataResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthenticationData'] = ResolversParentTypes['AuthenticationData']> = ResolversObject<{
   id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  userID: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  user: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   login: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   password: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   isActive: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
@@ -207,29 +157,9 @@ export type AuthenticationDataResolvers<ContextType = any, ParentType extends Re
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  activate: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationActivateArgs, never>>;
-  registration: Resolver<Maybe<ResolversTypes['RegistrationOutput']>, ParentType, ContextType, RequireFields<MutationRegistrationArgs, 'email' | 'password'>>;
-}>;
-
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  getAllUsers: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
-  getToken: Resolver<Maybe<ResolversTypes['AuthenticationData']>, ParentType, ContextType, RequireFields<QueryGetTokenArgs, never>>;
-  getUser: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
-}>;
-
-export type RegistrationOutputResolvers<ContextType = any, ParentType extends ResolversParentTypes['RegistrationOutput'] = ResolversParentTypes['RegistrationOutput']> = ResolversObject<{
-  accessToken: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  email: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  password: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  refreshToken: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
 export type TokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = ResolversObject<{
   id: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  userID: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  user: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   ip: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   accessToken: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   refreshToken: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -250,9 +180,6 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 
 export type Resolvers<ContextType = any> = ResolversObject<{
   AuthenticationData: AuthenticationDataResolvers<ContextType>;
-  Mutation: MutationResolvers<ContextType>;
-  Query: QueryResolvers<ContextType>;
-  RegistrationOutput: RegistrationOutputResolvers<ContextType>;
   Token: TokenResolvers<ContextType>;
   User: UserResolvers<ContextType>;
 }>;

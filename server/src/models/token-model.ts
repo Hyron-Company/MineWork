@@ -1,11 +1,10 @@
 import mongoose, { Schema, model } from 'mongoose'
-import { Token } from '../graphql/resolvers'
+import { ITokenSchema } from '../graphql/models'
 
-const TokenSchema = new Schema({
-  userID: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-    ref: 'user'
+const TokenSchema = new Schema<ITokenSchema>({
+  user: {
+    type: Schema.Types.ObjectId,
+    required: true
   },
   ip: {
     type: String,
@@ -21,6 +20,6 @@ const TokenSchema = new Schema({
   }
 })
 
-const TokenModel = model('token', TokenSchema)
+const TokenModel = model<ITokenSchema>('token', TokenSchema)
 
 export default TokenModel

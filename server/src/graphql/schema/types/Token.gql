@@ -1,7 +1,9 @@
-type Token {
-  id: ID!
-  userID: ID!
-  ip: String!
-  accessToken: String!
-  refreshToken: String!
+type Token @entity {
+  id: ID! @id
+  user: User! @link
+  ip: String! @column
+  accessToken: String! @column
+  refreshToken: String! @column
 }
+
+# import User from './User'

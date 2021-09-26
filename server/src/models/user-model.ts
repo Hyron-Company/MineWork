@@ -1,7 +1,7 @@
-import { User } from './../graphql/resolvers.d'
 import mongoose, { Schema, model } from 'mongoose'
+import { IUserSchema } from '../graphql/models'
 
-export const UserSchema = new Schema({
+export const UserSchema = new Schema<IUserSchema>({
   email: {
     type: String,
     unique: true,
@@ -26,11 +26,11 @@ export const UserSchema = new Schema({
     type: String
   },
   authenticationData: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'authenticationData'
   }
 })
 
-const UserModel = model('user', UserSchema)
+const UserModel = model<IUserSchema>('user', UserSchema)
 
 export default UserModel
