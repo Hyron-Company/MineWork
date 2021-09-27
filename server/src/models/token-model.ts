@@ -7,15 +7,15 @@ const TokenSchema = new Schema<ITokenSchema>({
     required: true
   },
   ip: {
-    type: String,
+    type: String
     // required: true
   },
   accessToken: {
-    type: String,
+    type: String
     // required: true
   },
   refreshToken: {
-    type: String,
+    type: String
     // required: true
   }
 })

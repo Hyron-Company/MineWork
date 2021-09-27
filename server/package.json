@@ -6,7 +6,7 @@
     "start": "ts-node app.ts",
     "dev": "ts-node-dev --respawn app.ts",
     "gql": "graphql-codegen",
-    "lint" : "eslint src --ext .ts",
+    "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --fix --ext .ts"
   },
   "dependencies": {
@@ -43,6 +43,7 @@
     "@typescript-eslint/eslint-plugin": "latest",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "latest",
+    "eslint-plugin-unicorn": "^36.0.0",
     "ts-node": "^10.2.1",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.2"

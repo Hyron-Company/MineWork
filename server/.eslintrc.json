@@ -1,19 +1,51 @@
 {
-    "env": {
-        "es2021": true,
-        "node": true
-    },
-    "extends": [
-        "airbnb-base"
+  "env": {
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:unicorn/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "ignorePatterns": ["resolvers.d.ts"],
+  "plugins": ["@typescript-eslint", "import", "unicorn"],
+
+  "rules": {
+    "unicorn/filename-case": [
+      "error",
+      {
+        "cases": {
+          "kebabCase": true
+        }
+      }
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "@typescript-eslint"
+    "unicorn/prevent-abbreviations": [
+      "error",
+      {
+        "allowList": {
+          "getInitialProps": false
+        },
+        "replacements": {
+          "args": {
+            "arguments": false
+          }
+        }
+      }
     ],
-    "rules": {
-    }
+    "unicorn/no-null": "off",
+    "unicorn/consistent-destructuring": "off",
+    "unicorn/no-array-for-each": "off",
+    "unicorn/prefer-module": "off",
+    "unicorn/prefer-node-protocol": "off",
+    "unicorn/import-style": "off",
+    "import/no-unresolved": "off"
+  }
 }

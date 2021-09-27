@@ -8,7 +8,7 @@ const AuthenticationSchema = new Schema<IAuthenticationDataSchema>({
       ref: 'user'
   },
   activationCode: {
-      type: String,
+      type: String
   },
   isActive: {
       type: Boolean,
@@ -24,7 +24,7 @@ const AuthenticationSchema = new Schema<IAuthenticationDataSchema>({
       required: true
   },
   tokens: {
-      type: Array(Schema.Types.ObjectId),
+      type: [Schema.Types.ObjectId],
       ref: 'token'
   }
 })
