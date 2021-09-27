@@ -10,7 +10,7 @@ const buildGraphQLSchema = (pathToTypes: string, pathToResolvers: string) => {
   const resolvers = loadFilesSync(pathToResolvers)
   return addResolversToSchema({
     schema,
-    resolvers: mergeResolvers(resolvers)
+    resolvers: mergeResolvers(resolvers),
   })
 }
 

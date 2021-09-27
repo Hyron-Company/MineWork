@@ -26,13 +26,13 @@ const start = async () => {
   console.log('🟣 Apollo server has been started')
 
   try {
-    app.get('/', (req: Request, res: Response) => res.send('GraphQL API'))
+    app.get('/', (_request: Request, response: Response) => response.send('GraphQL API'))
 
     apollo.applyMiddleware({ app, path: '/gql' })
 
     app.listen({ port: PORT }, () => console.log(`🚀 Server has been started on port: ${PORT}...`))
-  } catch (err) {
-    console.log(`❌ Error: \n ${err}`)
+  } catch (error) {
+    console.log(`❌ Error: \n ${error}`)
   }
 }
 

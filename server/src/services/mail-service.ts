@@ -1,23 +1,19 @@
 import nodemailer from 'nodemailer'
 
-class MailService {
-  private transporter
+export default class MailService {
+  static transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASSWORD
+    }
+  })
 
-  constructor() {
-    this.transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
-      auth: {
-        user: 'mine.work.off@gmail.com',
-        pass: 'fsdgfdgsd5548sdfsd'
-      }
-    })
-  }
-
-  public sendActivationMail = async (to: string, link: string) => {
+  static async sendActivationMail (to: string, link: string) : Promise<void> {
     await this.transporter.sendMail({
-      from: 'mine.work.off@gmail.com',
+      from: process.env.MAIL_USER,
       to,
       subject: 'Активация акаунта на MineWork',
       text: '',
@@ -29,6 +25,6 @@ class MailService {
           `
     })
   }
-}
 
-export default new MailService();
+  constructor() {return }
+}

@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from 'mongoose'
+import { Schema, model } from 'mongoose'
 import { ITokenSchema } from '../graphql/models'
 
 const TokenSchema = new Schema<ITokenSchema>({

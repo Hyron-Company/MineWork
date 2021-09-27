@@ -15,5 +15,7 @@ type Query {
 type Mutation {
   registration(input: RegisterUser): User
   activate(activationCode: String): Boolean
+  login(login: String, password: String): User
+  logout: Boolean 
 }
 

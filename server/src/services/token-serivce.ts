@@ -3,8 +3,8 @@ import TokenModel from '../models/token-model'
 import mongoose from 'mongoose'
 import { UserPayloadTokenDto } from '../dtos/user-dto'
 
-class TokenService {
-  generateTokens = (payload: UserPayloadTokenDto) => {
+export default class TokenService {
+  static generateTokens(payload: UserPayloadTokenDto) {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET || 'sercer-key', { expiresIn: '30m' })
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET || 'sercer-key', { expiresIn: '30d' })
 
@@ -14,7 +14,7 @@ class TokenService {
     }
   }
 
-  saveToken = async (userId: mongoose.Schema.Types.ObjectId, refreshToken: string) => {
+  static async saveToken (userId: mongoose.Schema.Types.ObjectId, refreshToken: string) {
     const tokenData = await TokenModel.findOne({ user: userId })
     if (tokenData) {
       tokenData.refreshToken = refreshToken
@@ -22,6 +22,6 @@ class TokenService {
     const token = await TokenModel.create({ user: userId, refreshToken })
     return token
   }
-}
 
-export default new TokenService();
+  constructor () {return }
+}

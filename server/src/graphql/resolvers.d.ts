@@ -27,12 +27,20 @@ export type AuthenticationData = {
 export type Mutation = {
   __typename?: 'Mutation';
   activate: Maybe<Scalars['Boolean']>;
+  login: Maybe<User>;
+  logout: Maybe<Scalars['Boolean']>;
   registration: Maybe<User>;
 };
 
 
 export type MutationActivateArgs = {
   activationCode: Maybe<Scalars['String']>;
+};
+
+
+export type MutationLoginArgs = {
+  login: Maybe<Scalars['String']>;
+  password: Maybe<Scalars['String']>;
 };
 
 
@@ -197,6 +205,8 @@ export type AuthenticationDataResolvers<ContextType = any, ParentType extends Re
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   activate: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationActivateArgs, never>>;
+  login: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLoginArgs, never>>;
+  logout: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   registration: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationRegistrationArgs, never>>;
 }>;
 

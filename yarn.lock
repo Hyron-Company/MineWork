@@ -1619,6 +1619,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphql-tools/schema@npm:^6.0.9":
+  version: 6.2.4
+  resolution: "@graphql-tools/schema@npm:6.2.4"
+  dependencies:
+    "@graphql-tools/utils": ^6.2.4
+    tslib: ~2.0.1
+  peerDependencies:
+    graphql: ^14.0.0 || ^15.0.0
+  checksum: ccedfaf21a07dd8649334808fdbd053f8476624d2886acaed6ac2574426792a2ea5c4a62290bf48f0f11e60f3aada36c7b56fb4fe65665d3fcc474ba552c8923
+  languageName: node
+  linkType: hard
+
 "@graphql-tools/schema@npm:^7.0.0, @graphql-tools/schema@npm:^7.1.4, @graphql-tools/schema@npm:^7.1.5":
   version: 7.1.5
   resolution: "@graphql-tools/schema@npm:7.1.5"
@@ -1711,6 +1723,19 @@ __metadata:
   peerDependencies:
     graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
   checksum: 6380f734250479b57fd9e8b6359f9e543b537a8e27652c6c49b3efc091e42fbcd25e38779abf178305e2d40276e39a7ff8fee247db0b728d8747da8f75aeb2e6
+  languageName: node
+  linkType: hard
+
+"@graphql-tools/utils@npm:^6.0.9, @graphql-tools/utils@npm:^6.2.4":
+  version: 6.2.4
+  resolution: "@graphql-tools/utils@npm:6.2.4"
+  dependencies:
+    "@ardatan/aggregate-error": 0.0.6
+    camel-case: 4.1.1
+    tslib: ~2.0.1
+  peerDependencies:
+    graphql: ^14.0.0 || ^15.0.0
+  checksum: 20f50cee3ffe9b4e8e201d47a6072e4be380391a3f6d04af6636966bf9d6c462edda1b4f76336fac585ebbe4d946cf66c181b97c3705aa154e1c98679c320c42
   languageName: node
   linkType: hard
 
@@ -3668,6 +3693,16 @@ __metadata:
   version: 3.1.0
   resolution: "callsites@npm:3.1.0"
   checksum: 072d17b6abb459c2ba96598918b55868af677154bec7e73d222ef95a8fdb9bbf7dae96a8421085cdad8cd190d86653b5b6dc55a4484f2e5b2e27d5e0c3fc15b3
+  languageName: node
+  linkType: hard
+
+"camel-case@npm:4.1.1":
+  version: 4.1.1
+  resolution: "camel-case@npm:4.1.1"
+  dependencies:
+    pascal-case: ^3.1.1
+    tslib: ^1.10.0
+  checksum: ba996819910deedd18d268b1bf0df38fe3745f8f5c9f377a95a2dfad5ebe420c255272271b95b57d37270bfcc19aac2b5984d5078509cf862e5279c063f3cbc9
   languageName: node
   linkType: hard
 
@@ -5945,6 +5980,19 @@ __metadata:
   peerDependencies:
     graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
   checksum: c1179d44b4fea53784ec7fa2cf56acbcfcd2886bd617fa847106b51471b8cd3b30daae0a0fb04a9c208cfde77f7783383dc5f5f094b22007c44455feceb5691a
+  languageName: node
+  linkType: hard
+
+"graphql-constraint-directive@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "graphql-constraint-directive@npm:2.1.1"
+  dependencies:
+    "@graphql-tools/schema": ^6.0.9
+    "@graphql-tools/utils": ^6.0.9
+    validator: ^10.2.0
+  peerDependencies:
+    graphql: ^14.0.0 || ^15.0.0
+  checksum: 2fb63a9fd3925e4bc99afee6667ffaa3098aff6fde19fb376faa350d98ba1d4782a5443b714b7eaea11f6589a902720d752b362db21b9c1f3a61f8a7faf8c936
   languageName: node
   linkType: hard
 
@@ -8527,7 +8575,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pascal-case@npm:^3.1.2":
+"pascal-case@npm:^3.1.1, pascal-case@npm:^3.1.2":
   version: 3.1.2
   resolution: "pascal-case@npm:3.1.2"
   dependencies:
@@ -9599,6 +9647,7 @@ resolve@^2.0.0-next.3:
     eslint-plugin-unicorn: ^36.0.0
     express: ^4.17.1
     graphql: ^15.5.1
+    graphql-constraint-directive: ^2.1.1
     graphql-depth-limit: ^1.1.0
     graphql-tools: ^7.0.5
     jsonwebtoken: ^8.5.1
@@ -10886,6 +10935,13 @@ resolve@^2.0.0-next.3:
     spdx-correct: ^3.0.0
     spdx-expression-parse: ^3.0.0
   checksum: 35703ac889d419cf2aceef63daeadbe4e77227c39ab6287eeb6c1b36a746b364f50ba22e88591f5d017bc54685d8137bc2d328d0a896e4d3fd22093c0f32a9ad
+  languageName: node
+  linkType: hard
+
+"validator@npm:^10.2.0":
+  version: 10.11.0
+  resolution: "validator@npm:10.11.0"
+  checksum: b945e5712af888fc5c984312cf9a7736d16a03f989556291d7984e5747efaaee6cdff671f6b0ef2630a6e2866a2728ab0f341877b878a9ffb8ad770dfcad7170
   languageName: node
   linkType: hard
 

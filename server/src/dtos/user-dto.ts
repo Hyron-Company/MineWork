@@ -1,13 +1,15 @@
 import { IAuthenticationDataSchema, IUserSchema } from '../graphql/models'
 
-class UserDto {
-  payloadToken(user: Partial<IUserSchema & IAuthenticationDataSchema>) : UserPayloadTokenDto {
+export default class UserDto {
+  static payloadToken(user: Partial<IUserSchema & IAuthenticationDataSchema>) : UserPayloadTokenDto {
     return {
       email: user.email || '',
       nickname: user.nickname || '',
       password: user.password || ''
     }
   }
+
+  constructor() {return }
 }
 
 export interface UserPayloadTokenDto {
@@ -16,4 +18,3 @@ export interface UserPayloadTokenDto {
   password: string
 }
 
-export default new UserDto()
