@@ -8,8 +8,11 @@ import { NavLink } from '../atoms/NavLink'
 import { PersonaSvg } from '../svg/PersonaSvg'
 import { ToggleLanguage } from '../molecules/ToggleLanguage'
 import { SwitchTheme } from '../atoms/SwitchTheme'
+import { useGlobalState } from '../globalState'
+import { LoginButton } from '../atoms/LoginButton'
 
 export const Header: React.FC = () => {
+  const [, setOpen] = useGlobalState('followPopup')
   const { subscription, aboutUs, login } = useLanguage()
 
   return (
@@ -26,9 +29,9 @@ export const Header: React.FC = () => {
         <NavLink href="/about-us" text={aboutUs} />
       </div>
       <div className="header__item header__right">
-        <NavLink href="/login" text={login} >
+        <LoginButton onClick={() => setOpen(true)} text={login}>
           <PersonaSvg />
-        </NavLink>
+        </LoginButton>
         <ToggleLanguage />
         <SwitchTheme />
       </div>

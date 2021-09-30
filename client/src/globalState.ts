@@ -3,7 +3,9 @@ import { light } from './settings/themes';
 
 const initialState = {
   theme: light,
-  language: 'RU'
+  language: 'RU',
+
+  followPopup: true
 }
 
 export const { useGlobalState } = createGlobalState(initialState)

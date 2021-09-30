@@ -1,0 +1,29 @@
+.label-input-container {
+  width: 100%;
+  margin-bottom: 20px;
+
+  &__label {
+    display: block;
+    margin-bottom: 12px;
+
+    line-height: 19px;
+    color: #000000;
+  }
+
+  .input-container {
+    height: 40px;
+    padding: 0;
+    background: #ffffff;
+    border: 1px solid var(--primary-color);
+    box-sizing: border-box;
+    border-radius: 100px;
+
+    .MuiInputBase-root {
+      width: 100%;
+      padding: 18px;
+
+      font-size: 14px;
+      line-height: 16px;
+    }
+  }
+}

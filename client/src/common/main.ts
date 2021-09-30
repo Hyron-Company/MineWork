@@ -35,5 +35,5 @@ export const Initialize = (): void => {
     if (theme) {
       setTheme(theme)
     }
-  }, [language, theme, setLanguage, setTheme])
+  }, [language, setLanguage, setTheme])
 }

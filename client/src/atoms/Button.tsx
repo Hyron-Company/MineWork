@@ -7,8 +7,8 @@ interface IProps extends ButtonProps {
 export const Button: React.FC<IProps> = ({ text, variant, className, children, ...rest }) => {
   return (
     <MuiButton className={`button ${variant} ${className}`} {...rest}>
-      {text}
-      {children}
+      <span>{text}</span>
+      <div>{children}</div>
     </MuiButton>
   )
 }

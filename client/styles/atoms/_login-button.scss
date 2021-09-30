@@ -1,0 +1,23 @@
+.button-login {
+  display: flex;
+  align-items: center;
+  min-width: max-content;
+  gap: 10px;
+  color: var(--text-color);
+
+  svg {
+    fill: var(--text-color);
+  }
+
+  &:hover {
+    background: none;
+  }
+}
+
+.MuiButton-root.button-login {
+  text-decoration: none;
+  font-family: var(--secondary-font);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+}
