@@ -35,5 +35,5 @@ export const Initialize = (): void => {
     if (storageTheme && storageTheme?.name !== theme?.name) {
       setTheme(storageTheme)
     }
-  }, [])
+  }, [storageLanguage, storageTheme])
 }
