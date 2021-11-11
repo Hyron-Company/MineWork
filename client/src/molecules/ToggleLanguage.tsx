@@ -7,7 +7,7 @@ import { languages } from '../settings/languages'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 
 export const ToggleLanguage: React.FC = () => {
-  const [anchor, setAnchor] = useState<null | HTMLElement>(null)
+  const [anchor, setAnchor] = useState<HTMLElement>()
   const [language, setLanguage] = useGlobalState('language')
   const storage = useLocalStorage()
 
@@ -15,13 +15,13 @@ export const ToggleLanguage: React.FC = () => {
   const Flag = Flags[language]
 
   const toggleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchor(anchor ? null : event.currentTarget)
+    setAnchor(anchor ? undefined : event.currentTarget)
   }
 
   const handleSelectLanguage = (lang: string) => {
     setLanguage(lang)
     storage?.setItem('language', lang)
-    setAnchor(null)
+    setAnchor(undefined)
   }
 
   return (

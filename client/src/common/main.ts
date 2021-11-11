@@ -20,20 +20,20 @@ export const ObserveTheme = (): void => {
 }
 
 export const Initialize = (): void => {
-  const [, setTheme] = useGlobalState('theme')
-  const [, setLanguage] = useGlobalState('language')
+  const [theme, setTheme] = useGlobalState('theme')
+  const [language, setLanguage] = useGlobalState('language')
   const storage = useLocalStorage()
 
-  const language = storage?.getItem('language')
-  const theme = useLocalStorageItem<Theme>('theme')
+  const storageLanguage = storage?.getItem('language')
+  const storageTheme = useLocalStorageItem<Theme>('theme')
 
   useEffect(() => {
-    if (language) {
-      setLanguage(language)
+    if (storageLanguage && storageLanguage !== language) {
+      setLanguage(storageLanguage)
     }
 
-    if (theme) {
-      setTheme(theme)
+    if (storageTheme && storageTheme?.name !== theme?.name) {
+      setTheme(storageTheme)
     }
-  }, [language, theme, setLanguage, setTheme])
+  }, [storageLanguage, storageTheme])
 }

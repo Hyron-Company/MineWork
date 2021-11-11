@@ -1,0 +1,43 @@
+.sidebar {
+  padding: 20px;
+  height: calc(100vh - 40px);
+  justify-content: space-between;
+  width: calc(20vw - 100px);
+  min-width: max-content;
+  background: var(--sidebar-background);
+
+  &_open {
+    animation: opening 0.5s forwards;
+
+    @keyframes opening {
+      from {
+        margin-left: calc(-20vw - 100px);
+      }
+      to {
+        margin-left: 0;
+      }
+    }
+  }
+
+  &_close {
+    animation: closing 0.5s forwards;
+
+    @keyframes closing {
+      from {
+        margin-left: 0;
+      }
+      to {
+        margin-left: calc(-20vw - 100px);
+        display: none;
+      }
+    }
+  }
+
+  &__header-zone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    height: 36px;
+  }
+}

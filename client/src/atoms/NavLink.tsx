@@ -1,4 +1,4 @@
-import { A, AProps } from './A'
+import { A, IProps as AProps } from './A'
 
 export const NavLink: React.FC<AProps> = ({ className, text, children, ...rest }) => {
   return (

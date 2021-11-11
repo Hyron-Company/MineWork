@@ -1,0 +1,1 @@
+declare module 'country-flag-icons/react/1x1'

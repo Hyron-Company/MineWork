@@ -8,15 +8,17 @@ import { NavLink } from '../atoms/NavLink'
 import { PersonaSvg } from '../svg/PersonaSvg'
 import { ToggleLanguage } from '../molecules/ToggleLanguage'
 import { SwitchTheme } from '../atoms/SwitchTheme'
+import { useGlobalState } from '../globalState'
 
 export const Header: React.FC = () => {
+  const [showSidebar, setShowSidebar] = useGlobalState('showSidebar')
   const { subscription, aboutUs, login } = useLanguage()
 
   return (
-    <header className="header">
-      <div className="header__item header__panel-zone">
+    <div className="header">
+      <div className={`header__item header__sidebar-zone ${showSidebar ? 'header__sidebar-zone_open' : 'header__sidebar-zone_close'}`}>
         <Logo />
-        <IconButton>
+        <IconButton onClick={() => setShowSidebar(true)}>
           <UnionLeftSvg />
         </IconButton>
       </div>
@@ -32,6 +34,6 @@ export const Header: React.FC = () => {
         <ToggleLanguage />
         <SwitchTheme />
       </div>
-    </header>
+    </div>
   )
 }

@@ -24,6 +24,7 @@ export const light: Theme = {
   headerBackground: '',
   shadow: '0px 4px 20px rgba(19, 0, 51, 0.04)',
   inputBackground: '#ececf1',
+  sidebarBackground: '#efeff5',
   ...common
 }
 
@@ -36,5 +37,6 @@ export const dark: Theme = {
   headerBackground: '',
   shadow: '0px 4px 20px rgba(0, 0, 0, 0.3)',
   inputBackground: '#1d1d1f',
+  sidebarBackground: '#070c11',
   ...common
 }

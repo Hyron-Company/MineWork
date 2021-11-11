@@ -3,9 +3,9 @@
   display: flex;
   gap: 20px;
   align-items: center;
+  flex-basis: content;
   background: var(--header-background);
   box-shadow: var(--shadow);
-  flex-basis: content;
 
   &__item {
     display: flex;
@@ -14,10 +14,73 @@
     min-width: max-content;
   }
 
-  &__panel-zone {
+  &__sidebar-zone {
     justify-content: space-between;
     gap: 20px;
-    width: 15vw;
+    min-width: 0;
+
+    &_close {
+      animation: closing-sidebar 0.5s forwards;
+
+      @keyframes closing-sidebar {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          margin-left: 0;
+          width: 20vw;
+          opacity: 1;
+          min-width: max-content;
+        }
+      }
+
+      .logo {
+        animation: closing-sidebar-logo 0.5s;
+
+        @keyframes closing-sidebar-logo {
+          from {
+            margin-left: -136px;
+          }
+          to {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+
+    &_open {
+      animation: opening-sidebar 0.5s forwards;
+
+      button {
+        cursor: default;
+      }
+
+      @keyframes opening-sidebar {
+        from {
+          opacity: 1;
+        }
+
+        to {
+          margin-left: -20px;
+          width: 0;
+          opacity: 0;
+        }
+      }
+
+      .logo {
+        animation: opening-sidebar-logo 0.5s;
+
+        @keyframes opening-sidebar-logo {
+          from {
+            margin-left: 0;
+          }
+          to {
+            margin-left: -136px;
+          }
+        }
+      }
+    }
   }
 
   &__left {

@@ -1,0 +1,11 @@
+.app {
+  display: flex;
+
+  &__body {
+    width: 100%;
+  }
+
+  &__page {
+    padding: 20px;
+  }
+}

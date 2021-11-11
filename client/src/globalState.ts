@@ -3,7 +3,8 @@ import { light } from './settings/themes';
 
 const initialState = {
   theme: light,
-  language: 'RU'
+  language: 'RU',
+  showSidebar: false 
 }
 
 export const { useGlobalState } = createGlobalState(initialState)
