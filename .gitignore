@@ -53,3 +53,9 @@ client/.vercel
 
 # graphql
 server/src/graphql/resolvers.d.ts
+
+# PWA
+client/public/sw.js
+client/public/sw.js.map
+client/public/workbox-*.js
+client/public/workbox-*.js.map
