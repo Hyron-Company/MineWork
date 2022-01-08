@@ -4,6 +4,7 @@
   "description": "Freelance for minecraft",
   "repository": "https://github.com/Hyron-Company/MineWork.git",
   "author": "Hyron Company <hyroncompany@gmail.com>",
+  "private": true,
   "scripts": {
     "client:dev": "cd client && yarn dev",
     "client:start": "cd client && yarn start",
