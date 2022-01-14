@@ -1,5 +1,0 @@
-# import Hello from './query/Hello.gql'
-
-type Query {
-  hello: [Hello]
-}
