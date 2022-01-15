@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import express, { Application, Request, Response } from 'express'
@@ -18,19 +19,19 @@ const mongoConnectOptions = {
 app.use(cors())
 
 const start = async () => {
-  const schema = await buildSchema({
-    resolvers: [__dirname + "/src/resolvers/**/*.ts"]
-  });
-
-  const apolloServer = new ApolloServer({ schema });
-
-  await mongoose.connect(MONGODB_URI as string, mongoConnectOptions)
-  console.log('💾 MongoDB has been connected')
-
-  await apolloServer.start()
-  console.log('🟣 Apollo server has been started')
-
   try {
+    const schema = await buildSchema({
+      resolvers: [__dirname + "/resolvers/**/*.ts"]
+    });
+
+    const apolloServer = new ApolloServer({ schema });
+
+    await apolloServer.start()
+    console.log('🟣 Apollo server has been started')
+
+    await mongoose.connect(MONGODB_URI as string, mongoConnectOptions)
+    console.log('💾 MongoDB has been connected')
+
     app.get('/', (_req: Request, res: Response) => res.send('<a href="/gql">GraphQL API</a>'))
 
     apolloServer.applyMiddleware({ app, path: '/gql' })

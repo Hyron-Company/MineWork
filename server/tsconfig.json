@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "esnext",
     "module": "commonjs",
-    "lib": ["esnext"],
+    "lib": ["esnext.asynciterable"],
     "moduleResolution": "node",
     "declaration": false,
     "composite": false,
+    "strictPropertyInitialization": false,
+    "strict": true,
     "esModuleInterop": true,
     "sourceMap": true,
     "removeComments": true,
