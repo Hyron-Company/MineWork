@@ -1,10 +1,11 @@
 import 'reflect-metadata'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import express, { Application, Request, Response } from 'express'
+import express, { Application, Request, Response, NextFunction } from 'express'
 import mongoose, { ConnectOptions } from 'mongoose'
 import { ApolloServer } from 'apollo-server-express'
 import { buildSchema } from 'type-graphql'
+import router from './utils/router'
 
 dotenv.config()
 
@@ -15,8 +16,15 @@ const app: Application = express()
 const mongoConnectOptions = {
   useNewUrlParser: true
 } as ConnectOptions
+const loggingMiddleware = (req: Request, _res: Response, next: NextFunction) => {
+  console.log('ip:', req.ip);
+  next();
+}
 
+app.use(loggingMiddleware)
+app.use(router)
 app.use(cors())
+app.set('trust proxy', true)
 
 const start = async () => {
   try {
@@ -31,8 +39,6 @@ const start = async () => {
 
     await mongoose.connect(MONGODB_URI as string, mongoConnectOptions)
     console.log('💾 MongoDB has been connected')
-
-    app.get('/', (_req: Request, res: Response) => res.send('<a href="/gql">GraphQL API</a>'))
 
     apolloServer.applyMiddleware({ app, path: '/gql' })
 

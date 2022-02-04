@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 import { propField } from '../../utils/decorators/propField'
 import { RoleEnum } from './RoleEnum'
 import { PersonSchema } from '../Person/PersonSchema'
-import { TokensSchema } from '../Tokens/TokensSchema'
+import { TokenSchema } from '../Token/TokenSchema'
 import { SubjectSchema } from '../Subject/SubjectSchema'
 
 @pre<UserSchema>("save", async function () {
@@ -27,8 +27,11 @@ export class UserSchema extends Typegoose {
   @prop({ required: true })
   password!: string
 
-  @propField({}, () => Boolean, { defaultValue: false })
+  @prop({ default: false })
   confirmed!: boolean
+
+  @prop()
+  code!: string
 
   @propField({ enum: RoleEnum }, () => RoleEnum, { defaultValue: RoleEnum.USER })
   role!: string
@@ -36,8 +39,8 @@ export class UserSchema extends Typegoose {
   @propField({ ref: () => PersonSchema }, () => String, { nullable: true })
   personID?: Ref<PersonSchema>
 
-  @prop({ ref: () => [TokensSchema] })
-  tokensID?: [Ref<TokensSchema>]
+  @prop({ ref: () => [TokenSchema] })
+  tokensID?: [Ref<TokenSchema>]
 
   @propField({ ref: () => SubjectSchema }, () => String, { nullable: true })
   subjectID?: Ref<SubjectSchema>
