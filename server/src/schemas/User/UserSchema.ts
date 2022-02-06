@@ -2,18 +2,19 @@ import { Field, ObjectType } from 'type-graphql'
 import { Typegoose, Ref, prop, pre } from 'typegoose'
 import bcrypt from 'bcrypt'
 import { propField } from '../../utils/decorators/propField'
-import { RoleEnum } from './RoleEnum'
+import { Role } from '../../types/enums/Role'
 import { PersonSchema } from '../Person/PersonSchema'
 import { TokenSchema } from '../Token/TokenSchema'
 import { SubjectSchema } from '../Subject/SubjectSchema'
+import { ObjectId } from 'mongoose'
 
 @pre<UserSchema>("save", async function () {
   if (this!.isModified('password')) this.password = await bcrypt.hash(this.password, 10)
 })
 @ObjectType()
 export class UserSchema extends Typegoose {
-  @Field()
-  readonly _id!: string
+  @Field(() => String)
+  readonly _id!: ObjectId
 
   @propField({ required: true })
   nickname!: string
@@ -33,14 +34,17 @@ export class UserSchema extends Typegoose {
   @prop()
   code!: string
 
-  @propField({ enum: RoleEnum }, () => RoleEnum, { defaultValue: RoleEnum.USER })
+  @propField({ enum: Role }, () => Role, { defaultValue: Role.USER })
   role!: string
+
+  @Field()
+  accessToken!: string
 
   @propField({ ref: () => PersonSchema }, () => String, { nullable: true })
   personID?: Ref<PersonSchema>
 
   @prop({ ref: () => [TokenSchema] })
-  tokensID?: [Ref<TokenSchema>]
+  tokenIDs?: [Ref<TokenSchema>]
 
   @propField({ ref: () => SubjectSchema }, () => String, { nullable: true })
   subjectID?: Ref<SubjectSchema>

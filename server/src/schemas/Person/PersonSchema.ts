@@ -1,11 +1,12 @@
+import { ObjectId } from 'mongoose'
 import { Field, ObjectType } from 'type-graphql'
 import { Typegoose } from 'typegoose'
 import { propField } from '../../utils/decorators/propField'
 
 @ObjectType()
 export class PersonSchema extends Typegoose {
-  @Field()
-  readonly _id!: string
+  @Field(() => String)
+  readonly _id!: ObjectId
 
   @propField()
   name?: string

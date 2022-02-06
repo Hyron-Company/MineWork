@@ -1,5 +1,7 @@
+import dotenv from 'dotenv'
 import nodemailer, { TransportOptions } from 'nodemailer'
 
+dotenv.config()
 const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, CLIENT_URL } = process.env
 
 export class MailService {
@@ -15,6 +17,16 @@ export class MailService {
         pass: SMTP_PASSWORD as string
       }
     } as TransportOptions)
+  }
+
+  async send(to: string, subject: string, html: string) {
+    await this.transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to,
+      subject,
+      text: '',
+      html
+    })
   }
 
   async sendActivationMail(to: string, link: string) {

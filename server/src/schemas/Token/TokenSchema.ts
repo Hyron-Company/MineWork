@@ -1,20 +1,13 @@
-import { Field, ObjectType } from 'type-graphql'
-import { Typegoose } from 'typegoose'
-import { propField } from '../../utils/decorators/propField'
+import { ObjectId } from 'mongoose'
+import { prop, Typegoose } from 'typegoose'
 
-@ObjectType()
 export class TokenSchema extends Typegoose {
-  @Field()
-  readonly _id!: string
+  readonly _id!: ObjectId
 
-  @propField({ required: true })
-  ip!: string
-
-  @propField({ required: true })
+  @prop({ required: true })
   token!: string
-
-  @propField({ required: true }, ()=> Date)
-  createdAt!: Date
 }
 
 export const TokenModel = new TokenSchema().getModelForClass<typeof TokenSchema>(TokenSchema)
+
+export type TokenInput = Pick<TokenSchema, 'token'>

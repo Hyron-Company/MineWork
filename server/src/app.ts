@@ -1,38 +1,31 @@
 import 'reflect-metadata'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import express, { Application, Request, Response, NextFunction } from 'express'
+import express, { Application} from 'express'
 import mongoose, { ConnectOptions } from 'mongoose'
 import { ApolloServer } from 'apollo-server-express'
 import { buildSchema } from 'type-graphql'
 import router from './utils/router'
+import { parseContext } from './utils/parseContext'
+import { authChecker } from './utils/middlewares/authChecker'
 
 dotenv.config()
-
 const { PORT, MONGODB_URI } = process.env
-
 const app: Application = express()
+const mongoConnectOptions = { useNewUrlParser: true} as ConnectOptions
 
-const mongoConnectOptions = {
-  useNewUrlParser: true
-} as ConnectOptions
-const loggingMiddleware = (req: Request, _res: Response, next: NextFunction) => {
-  console.log('ip:', req.ip);
-  next();
-}
-
-app.use(loggingMiddleware)
 app.use(router)
 app.use(cors())
 app.set('trust proxy', true)
 
-const start = async () => {
+;(async () => {
   try {
     const schema = await buildSchema({
-      resolvers: [__dirname + "/resolvers/**/*.ts"]
-    });
+      resolvers: [__dirname + "/resolvers/**/*.ts"],
+      authChecker
+    })
 
-    const apolloServer = new ApolloServer({ schema });
+    const apolloServer = new ApolloServer({ schema, context: parseContext });
 
     await apolloServer.start()
     console.log('🟣 Apollo server has been started')
@@ -46,6 +39,4 @@ const start = async () => {
   } catch (err) {
     console.log(`❌ Error: \n ${err}`)
   }
-}
-
-;(async () => await start())()
+})()
