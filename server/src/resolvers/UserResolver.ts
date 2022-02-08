@@ -1,8 +1,8 @@
-import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql'
-import { UserSchema, LoginInput, RegisterInput, RefreshInput } from '../schemas/User'
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from 'type-graphql'
+import { ExpressContext } from 'apollo-server-express'
+import { LoginInput, RegisterInput } from '../schemas/User'
 import { UserService } from '../services/UserService'
 import { SendActivationMailInput } from '../schemas/User/SendActivationMailInput'
-import { Context } from '../types/Context'
 
 @Resolver()
 export default class UserResolver {
@@ -13,23 +13,25 @@ export default class UserResolver {
   }
 
   @Mutation(() => String)
-  async register(@Arg('input') input: RegisterInput, @Ctx() context: Context) {
-    return await this.userService.register(input, context)
+  async register(@Arg('input') input: RegisterInput) {
+    return await this.userService.register(input)
   }
 
-  @Mutation(() => UserSchema)
-  async login(@Arg('input') input: LoginInput, @Ctx() context: Context) {
+  @Mutation(() => String)
+  async login(@Arg('input') input: LoginInput, @Ctx() context: ExpressContext) {
     return await this.userService.login(input, context)
   }
 
+  @Authorized()
   @Mutation(() => String)
-  async logout(@Ctx() context: Context) {
+  async logout(@Ctx() context: ExpressContext) {
     return await this.userService.logout(context)
   }
 
+  @Authorized()
   @Mutation(() => String)
-  async refresh(@Arg('input') input: RefreshInput, @Ctx() context: Context) {
-    return await this.userService.refresh(input, context)
+  async refresh(@Ctx() context: ExpressContext) {
+    return await this.userService.refresh(context)
   }
 
   @Mutation(() => String)
@@ -37,6 +39,7 @@ export default class UserResolver {
     return await this.userService.sendActivationMail(input)
   }
 
+  @Authorized()
   @Query(() => String)
   async getUser() {
     return 'user'

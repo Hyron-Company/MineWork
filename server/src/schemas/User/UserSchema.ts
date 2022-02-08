@@ -8,7 +8,7 @@ import { TokenSchema } from '../Token/TokenSchema'
 import { SubjectSchema } from '../Subject/SubjectSchema'
 import { ObjectId } from 'mongoose'
 
-@pre<UserSchema>("save", async function () {
+@pre<UserSchema>('save', async function () {
   if (this!.isModified('password')) this.password = await bcrypt.hash(this.password, 10)
 })
 @ObjectType()
@@ -44,7 +44,7 @@ export class UserSchema extends Typegoose {
   personID?: Ref<PersonSchema>
 
   @prop({ ref: () => [TokenSchema] })
-  tokenIDs?: [Ref<TokenSchema>]
+  tokenIDs?: Ref<TokenSchema>[]
 
   @propField({ ref: () => SubjectSchema }, () => String, { nullable: true })
   subjectID?: Ref<SubjectSchema>

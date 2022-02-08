@@ -14,7 +14,7 @@ router.get('/activate/:nickname/:code', async (req: Request, res: Response, next
   try {
     const { nickname, code } = req.params
     await userService.activate(nickname, code)
-    return res.redirect(CLIENT_URL as string)
+    return res.redirect(`${CLIENT_URL}/login`)
   } catch (e) {
     next(e)
   }

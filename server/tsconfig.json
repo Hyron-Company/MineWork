@@ -1,8 +1,13 @@
 {
+    "ts-node": {
+      "files": true
+    },
+    "include": ["env.d.ts", "src/**/*"],
+    "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "esnext",
     "module": "commonjs",
-    "lib": ["esnext.asynciterable"],
+    "lib": ["esnext", "esnext.asynciterable"],
     "moduleResolution": "node",
     "declaration": false,
     "composite": false,
