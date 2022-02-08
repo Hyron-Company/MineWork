@@ -3,10 +3,9 @@ import JWTR from 'jwt-redis'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import { Ref } from 'typegoose'
-import { ObjectId } from 'mongoose'
+import { Document } from 'mongodb'
 import { TokenInput, TokenModel, TokenSchema } from '../schemas/Token'
-import { UserModel } from '../schemas/User/UserSchema'
-import { ApolloError } from 'apollo-server-errors';
+import { UserSchema } from '../schemas/User/UserSchema'
 
 dotenv.config()
 const { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET, REDIS_URL } = process.env
@@ -47,15 +46,9 @@ export class TokenService {
     return token && this.jwtr.decode<JwtPayload>(token)
   }
 
-  async save(token: string, _id: ObjectId, ip: string, ids?: Ref<TokenSchema>[]) { // TODO: refactor to object
-    const user = await UserModel.findOne({ _id })
-
-    if (!user) {
-      throw new ApolloError('Произошла какая-то ошибка. Попробуйте ещё раз')
-    }
-
-    if (ids?.length) {
-      let models = await TokenModel.find({ _id: { $in: ids } })
+  async save(token: string, ip: string, user: UserSchema & Document) {
+    if (user.tokenIDs?.length) {
+      let models = await TokenModel.find({ _id: { $in: user.tokenIDs } })
 
       models = models.filter(async (model) => {
         let isValid
@@ -95,10 +88,10 @@ export class TokenService {
 
         models = models.filter(model => model._id !== oldest._id)
 
-        user.tokenIDs = models.map(model => model._id)
-
         await TokenModel.deleteOne({ _id: oldest._id })
       }
+
+      user.tokenIDs = models.map(model => model._id)
     }
 
     const input: TokenInput = {
@@ -109,7 +102,7 @@ export class TokenService {
 
     const tokenModel = await TokenModel.findOne({ token })
     if (tokenModel) {
-      user.tokenIDs ? user.tokenIDs.push(tokenModel._id) : [tokenModel._id]
+      user.tokenIDs = user.tokenIDs ? [...user.tokenIDs, tokenModel._id] : [tokenModel._id]
     }
 
     user.save()
@@ -117,6 +110,19 @@ export class TokenService {
 
   async find(_id: Ref<TokenSchema>) {
     return await TokenModel.findOne({ _id })
+  }
+
+  async findIpIndex(ip: string, ids?: Ref<TokenSchema>[]) {
+    let models = await TokenModel.find({ _id: { $in: ids } })
+
+    const ipIndex = models?.findIndex(async (model: TokenSchema & Document) => {
+      const payload = this.decodeRefresh(model?.token)
+
+      return payload && payload.ip === ip
+    })
+
+    console.log(ipIndex)
+    return ipIndex
   }
 
   async delete(access?: string, refresh?: string) {

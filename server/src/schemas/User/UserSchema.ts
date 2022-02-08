@@ -1,5 +1,5 @@
 import { Field, ObjectType } from 'type-graphql'
-import { Typegoose, Ref, prop, pre } from 'typegoose'
+import { Typegoose, Ref, prop, pre, arrayProp } from 'typegoose'
 import bcrypt from 'bcrypt'
 import { propField } from '../../utils/decorators/propField'
 import { Role } from '../../types/enums/Role'
@@ -34,19 +34,19 @@ export class UserSchema extends Typegoose {
   @prop()
   code!: string
 
-  @propField({ enum: Role }, () => Role, { defaultValue: Role.USER })
+  @propField({ enum: Role, default: Role.USER }, () => Role, { defaultValue: Role.USER })
   role!: string
 
   @Field()
   accessToken!: string
 
-  @propField({ ref: () => PersonSchema }, () => String, { nullable: true })
+  @propField({ ref: PersonSchema }, () => String, { nullable: true })
   personID?: Ref<PersonSchema>
 
-  @prop({ ref: () => [TokenSchema] })
+  @arrayProp({ itemsRef: TokenSchema, default: [] })
   tokenIDs?: Ref<TokenSchema>[]
 
-  @propField({ ref: () => SubjectSchema }, () => String, { nullable: true })
+  @propField({ ref: SubjectSchema }, () => String, { nullable: true })
   subjectID?: Ref<SubjectSchema>
 }
 

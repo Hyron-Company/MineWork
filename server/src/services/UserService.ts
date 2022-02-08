@@ -4,15 +4,11 @@ import { TOTP } from '@otplib/core'
 import { createDigest } from '@otplib/plugin-crypto'
 import { ApolloError } from 'apollo-server-errors'
 import { isEmail, isPhoneNumber } from 'class-validator'
-import { Ref } from 'typegoose'
 import { ExpressContext } from 'apollo-server-express'
 import { CookieOptions } from 'express'
-import { RegisterInput } from './../schemas/User/RegisterInput'
-import { LoginInput, UserModel } from '../schemas/User'
+import { LoginInput, UserModel, RegisterInput, SendActivationMailInput } from '../schemas/User'
 import { MailService } from './MailService'
-import { SendActivationMailInput } from '../schemas/User/SendActivationMailInput'
 import { TokenService } from './TokenService'
-import { TokenSchema } from '../schemas/Token'
 
 dotenv.config()
 const { TOTP_SECRET, SERVER_URL } = process.env
@@ -70,7 +66,6 @@ export class UserService {
 
     if (!user.confirmed) {
       const code = this.totp.generate(TOTP_SECRET)
-
       await this.mailService.sendActivationMail(user.email, `${SERVER_URL}/activate/${user.nickname}/${code}`)
 
       throw new ApolloError(`Подтвердите почту ${user.email}. Новая ссылка для активации уже отправлена`)
@@ -79,20 +74,15 @@ export class UserService {
     const { access, refresh } = await this.tokenService.generate({ _id: user._id, ip: context.req.ip })
     user.accessToken = access
 
-    await this.tokenService.save(refresh, user._id, context.req.ip, user.tokenIDs)
+    await this.tokenService.save(refresh, context.req.ip, user)
 
-    const ipIndex = user.tokenIDs?.findIndex(async (_id: Ref<TokenSchema>) => {
-      const model = await this.tokenService.find(_id)
-      const payload = this.tokenService.decodeRefresh(model?.token)
+    const ipIndex = await this.tokenService.findIpIndex(context.req.ip, user.tokenIDs)
 
-      return payload && payload.ip === context.req.ip
-    })
-
-    if (ipIndex === undefined || ipIndex === -1) {
+    if (user.tokenIDs?.length && (ipIndex === undefined || ipIndex === -1)) {
       await this.mailService.send(
         user.email,
         'Предупреждение',
-        '<h3>Внимание</h3><br/></h1>Только что в ваш аккаунт MineWork вошли с нового айпи адреса. Если это вы то просто проигнорируйте это сообщение<h1>'
+        `<h3>Внимание</h3><br/><p>Только что в ваш аккаунт MineWork вошли с нового айпи адреса: ${context.req.ip}<br/>Если это вы то просто проигнорируйте это сообщение</p>`
       )
     }
 
@@ -114,7 +104,7 @@ export class UserService {
     const oldAccess = context.req.headers.authorization
     const oldRefresh = context.req.cookies.token
     const isValid = await this.tokenService.checkRefresh(oldRefresh)
-    const payload = this.tokenService.decodeRefresh()
+    const payload = this.tokenService.decodeRefresh(oldRefresh)
     const user = payload && await UserModel.findOne({ _id: payload._id })
 
     if (!isValid || !user) {
@@ -126,7 +116,7 @@ export class UserService {
     const { access, refresh } = await this.tokenService.generate({ _id: user._id, ip: context.req.ip })
     user.accessToken = access
 
-    await this.tokenService.save(refresh, user._id, context.req.ip, user.tokenIDs)
+    await this.tokenService.save(refresh, context.req.ip, user)
 
     context.res.cookie('token', refresh, this.cookieOptions)
 
